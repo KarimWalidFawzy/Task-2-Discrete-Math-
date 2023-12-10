@@ -125,5 +125,6 @@ int main(void){
         }
         C.notvalue();
     }
+    cout<< "\n since the last column in both tables are identical, I can safely say that both statements \n are logically equivalent"<<endl;
     return 0;
 }
