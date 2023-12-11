@@ -41,6 +41,11 @@ void AND(signals& X, signals& Y,signals& out){
 void OR(signals& X, signals& Y,signals& out){
     out.value=(X.value|Y.value);
 }
+void nsignal(signals* X,signals* Y){
+    bool a;
+    a= 1^(X->value);
+    (Y->value)= a;
+}
 void printstring(char* x){
     char y[15];
     for(int i=0;*(x+i)!='\0';i++){
@@ -60,6 +65,7 @@ int main(void){
     signals Output("Output");
     signals ander("(B|C)&B&C");
     signals v("");
+    signals nB("~B");
     A.value=true;
     B.value=true;
     C.value=true;
@@ -85,7 +91,8 @@ int main(void){
                     AND(A,B,AandB);
                     *(p+10)=AandB.getvalchar();
                     *(p+11)='\t';
-                    OR(A,B,AornB);
+                    nsignal(&B,&nB);
+                    OR(A,nB,AornB);
                     *(p+12)=AornB.getvalchar();
                     *(p+13)='\t';
                     OR(ander,AornB,v);
@@ -99,13 +106,12 @@ int main(void){
         }
         C.notvalue();
     }
-    cout<<"\n"<<"An equivalent statement can be made which will have the exact same truth table is (A|B)"<<endl;
+    cout<<"\n"<<"An equivalent statement can be made which will have the exact same truth table is ~B|A|C"<<endl;
     cout<<"A"<<'\t'<<"B"<<'\t'<<"C"<<"\tA|B"<<endl;
     char al[8];
     A.value=true;
     B.value=true;
     C.value=true;
-    signals AorB("A|B");
     for(int alpha=0;alpha<2;alpha++){
         for(int beta=0;beta<2;beta++){
             for(int gamma=0;gamma<2;gamma++){
@@ -115,8 +121,10 @@ int main(void){
                     *(al+3)='\t';
                     *(al+4)=C.getvalchar();
                     *(al+5)='\t';
-                    OR(A,B,AorB);
-                    *(al+6)=AorB.getvalchar();
+                    nsignal(&B,&nB);
+                    OR(A,nB,AornB);
+                    OR(AornB,C,v);
+                    *(al+6)=v.getvalchar();
                     *(al+7)='\0';
                     printstring(al);
                     A.notvalue();
