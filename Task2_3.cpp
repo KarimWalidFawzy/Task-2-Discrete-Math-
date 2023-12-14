@@ -1,3 +1,4 @@
+
 #include <iostream>
 using namespace std;
 class signals{
@@ -92,7 +93,7 @@ int main(void){
                     *(p+10)=AandB.getvalchar();
                     *(p+11)='\t';
                     nsignal(&B,&nB);
-                    OR(A,nB,AornB);
+                    AND(A,nB,AornB);
                     *(p+12)=AornB.getvalchar();
                     *(p+13)='\t';
                     OR(ander,AornB,v);
@@ -106,9 +107,10 @@ int main(void){
         }
         C.notvalue();
     }
-    cout<<"\n"<<"An equivalent statement can be made which will have the exact same truth table is ~B|A|C"<<endl;
-    cout<<"A"<<'\t'<<"B"<<'\t'<<"C"<<"\tA|B"<<endl;
+    cout<<"\n"<<"An equivalent statement can be made which will have the exact same truth table is A|(B&C)"<<endl;
+    cout<<"A"<<'\t'<<"B"<<'\t'<<"C"<<"\tA|(B&C)"<<endl;
     char al[8];
+    signals BandC("B&C");
     A.value=true;
     B.value=true;
     C.value=true;
@@ -121,9 +123,8 @@ int main(void){
                     *(al+3)='\t';
                     *(al+4)=C.getvalchar();
                     *(al+5)='\t';
-                    nsignal(&B,&nB);
-                    OR(A,nB,AornB);
-                    OR(AornB,C,v);
+                    AND(C,B,BC);
+                    OR(BC,A,v);
                     *(al+6)=v.getvalchar();
                     *(al+7)='\0';
                     printstring(al);
@@ -136,3 +137,4 @@ int main(void){
     cout<< "\n since the last column in both tables are identical, I can safely say that both statements \n are logically equivalent"<<endl;
     return 0;
 }
+
