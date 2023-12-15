@@ -1,4 +1,3 @@
-
 #include <iostream>
 using namespace std;
 class signals{
@@ -62,7 +61,7 @@ int main(void){
     signals BC("(B&C)");
     signals BorC("(B|C)");
     signals AandB("(A&B)");
-    signals AornB("(A|~B)");
+    signals AornB("(A&~B)");
     signals Output("Output");
     signals ander("(B|C)&B&C");
     signals v("");
@@ -72,7 +71,7 @@ int main(void){
     C.value=true;
     char p[15];
     cout<<"Our logical circuit describes the boolean function (A&B)|(A&~B)|((B|C)&B&C)"<<endl;
-    cout<<"A"<<'\t'<<"B"<<'\t'<<"C"<<"\tB&C"<<"\tB|C"<<'\t'<<"A&B"<<"\t(A|~B)"<<"\tOutput"<<endl;
+    cout<<"A"<<'\t'<<"B"<<'\t'<<"C"<<"\tB&C"<<"\tB|C"<<'\t'<<"A&B"<<"\t(A&~B)"<<"\tOutput"<<endl;
     for(int i=0;i<2;i++){
         for(int j=0;j<2;j++){
             for(int k=0;k<2;k++){
@@ -134,7 +133,6 @@ int main(void){
         }
         C.notvalue();
     }
-    cout<< "\n since the last column in both tables are identical, I can safely say that both statements \n are logically equivalent"<<endl;
+    cout<< "\n since the last column in both tables are identical, I can safely say that both statements \n are logically equivalent & satisfiable"<<endl;
     return 0;
 }
-
